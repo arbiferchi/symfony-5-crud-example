@@ -1,5 +1,7 @@
 doctrine:
     dbal:
+        driver: 'pdo_pgsql'
+        charset: utf8
         url: '%env(resolve:DATABASE_URL)%'
         types:
             lang:  App\Classes\DBAL\LangType

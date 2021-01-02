@@ -1,5 +1,5 @@
 FROM nginx:1.17
 
-ADD ./mywords.conf /etc/nginx/conf.d/default.conf
+ADD ./sycrud.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /var/www/mywords
+WORKDIR /var/www/sycrud

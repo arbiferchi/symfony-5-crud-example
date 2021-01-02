@@ -13,10 +13,11 @@ php-cli
 
 
 Show:
-    mywords:8082
+    sycrud:8080
+    (if change hosts file)
 
 Enter php-cli:
-    docker exec -it mywords-php-cli bash
+    docker exec -it sycrud-php-cli bash
 
 Docker-Compose up:
     docker-compose up --build -d

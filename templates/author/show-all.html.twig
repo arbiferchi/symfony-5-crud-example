@@ -1,0 +1,67 @@
+{#
+# $authors
+#}
+{% extends 'base.html.twig' %}
+{% block title %}Show all Authors{% endblock %}
+{% block body %}
+
+<div class="container mb-2 mt-4">
+    <h3>
+        All authors
+    </h3>
+    <!-- table -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set cnt = 1 %}
+        {% for author in authors %}
+            <tr>
+                <th scope="row">{{ cnt }}</th>
+                <td>{{ author.name }}</td>
+                <td>{{ author.email }}</td>
+                {% if (author.gender is defined) %}
+                    <td>{{ author.gender }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>
+                    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <a href="{{ path('author-show-one', {'author':author.id}) }}" class="btn btn-light" role="button" aria-pressed="true">show</a>
+                            <a href="{{ path('author-update', {'author':author.id}) }}" class="btn btn-secondary" role="button" aria-pressed="true">edit</a>
+                            <a href="{{ path('author-delete', {'author':author.id}) }}" class="btn btn-danger" role="button" aria-pressed="true"
+                               onclick="event.preventDefault();
+                               document.getElementById('author-delete').submit();">delete
+                            </a>
+
+                            <!-- form for delete -->
+                            <form id="author-delete" action="{{ path('author-delete', {'author':author.id}) }}" method="POST" style="display: none;">
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% set cnt = cnt + 1 %}
+        {% endfor %}
+        <!-- create btn -->
+            <tr>
+                <th scope="row"></th>
+                <td colspan="4">
+                    <a href="{{ path('author-create') }}" class="btn btn-outline-secondary float-right" role="button" aria-pressed="true">create</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock %}

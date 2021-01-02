@@ -13,6 +13,10 @@ class DefaultController extends AbstractController
      */
     public function index(): Response
     {
+        /*$em = $this->getDoctrine()->getManager();
+        $em->getConnection()->connect();
+       dd($em->getConnection()->isConnected());*/
+
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
         ]);

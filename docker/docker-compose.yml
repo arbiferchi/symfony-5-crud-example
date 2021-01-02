@@ -2,26 +2,25 @@ version: '3.6'
 
 services:
 
-
   nginx:
     build:
       context: ./nginx
     volumes:
-      - ../:/var/www/mywords
+      - ../:/var/www/sycrud
     container_name: ${COMPOSE_PROJECT_NAME}-nginx
     restart: unless-stopped
     ports:
-      - "8082:80"
+      - "8080:80"
 
 
   php-fpm:
     build:
       context: ./php-fpm
     volumes:
-      - ../:/var/www/mywords
+      - ../:/var/www/sycrud
     container_name: ${COMPOSE_PROJECT_NAME}-php-fpm
-    #depends_on:
-      #- postgres
+    depends_on:
+      - postgres
     environment:
           XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1"
           PHP_IDE_CONFIG: "serverName=Docker"
@@ -30,10 +29,21 @@ services:
     build:
       context: ./php-cli
     volumes:
-      - ../:/var/www/mywords
+      - ../:/var/www/sycrud
     command: sleep 25000
     container_name: ${COMPOSE_PROJECT_NAME}-php-cli
 
+  postgres:
+    image: postgres
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
+    restart: unless-stopped
+    ports:
+      - "54320:5432"
+    environment:
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+      - "POSTGRES_DB=${POSTGRES_DB}"
 
-#volumes:
-  #postgres:
+volumes:
+  postgres:

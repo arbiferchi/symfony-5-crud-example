@@ -46,4 +46,4 @@ RUN npm install -g yarn
 # add php.imi
 ADD ./php.ini /usr/local/etc/php/php.ini
 
-WORKDIR /var/www/mywords
+WORKDIR /var/www/sycrud

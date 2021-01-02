@@ -1,0 +1,48 @@
+{#
+# $author
+#}
+{% extends 'base.html.twig' %}
+{% block title %}Hello AuthorController!{% endblock %}
+{% block body %}
+
+    <div class="container mb-2 mt-4">
+        <h3>
+            {{ author.name }}
+        </h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ author.name }}</td>
+                    <td>{{ author.email }}</td>
+                    {% if (author.gender is defined) %}
+                        <td>{{ author.gender }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </td>
+                    <td>
+                        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a href="{{ path('author-show-all') }}" class="btn btn-outline-warning" role="button" aria-pressed="true">back</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

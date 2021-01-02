@@ -52,4 +52,4 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash \
 # add php.imi
 ADD ./php.ini /usr/local/etc/php/php.ini
 
-WORKDIR /var/www/mywords
+WORKDIR /var/www/sycrud
