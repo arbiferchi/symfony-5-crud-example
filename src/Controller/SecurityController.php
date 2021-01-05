@@ -3,12 +3,24 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class SecurityController extends AbstractController
 {
+
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
     /**
      * @Route("/login", name="app_login")
      */
@@ -32,5 +44,33 @@ class SecurityController extends AbstractController
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+
+
+
+    /**
+     * @Route("/security/register", name="security_register")
+     */
+    public function register(Request $request, ValidatorInterface $validator): Response
+    {
+        if ($request->isMethod('GET')) {
+            return $this->render('security/register.html.twig');
+        }
+        if ( !$this->isCsrfTokenValid('registration', $request->request->get('_csrf_token')) ) {
+            dd('Not valid');
+        }
+        $user = new User();
+        $user->setUsername($request->request->get('username'));
+        $user->setEmail($request->request->get('email'));
+        $user->setNativeLang( User::possibleLanguages()[rand(0,1)] );
+        $user->setRoles( $user->getRoles() );
+        $password = $this->passwordEncoder->encodePassword($user, $request->request->get('password'));
+        $user->setPassword($password);
+
+        dd($user);
+
+
+        return $this->render('security/register.html.twig');
     }
 }
