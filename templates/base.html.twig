@@ -20,6 +20,10 @@
 
 
 <body>
+{# TEST #}
+{{ dump(app.user) }}
+
+
 <!-- header -->
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal">SyCRUD</h5>
@@ -29,6 +33,8 @@
 {#    <button type="button" class="btn m-1 btn-outline-primary">Sign up</button>#}
     <a href="{{ url('security_register') }}" class="btn m-1 btn-outline-primary" role="button" aria-disabled="true">Sign up</a>
 </div>
+
+{% include 'flash_messsages.html.twig' %}
 
 <!-- body -->
 {% block body %}
