@@ -92,14 +92,6 @@ class SecurityController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            /* send email for confirmation */
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('sycrud@foomail.com', 'eatae'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
             /* login */
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
