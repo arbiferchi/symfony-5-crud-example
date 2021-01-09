@@ -32,6 +32,9 @@ services:
       - ../:/var/www/sycrud
     command: sleep 25000
     container_name: ${COMPOSE_PROJECT_NAME}-php-cli
+    environment:
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
 
   postgres:
     image: postgres

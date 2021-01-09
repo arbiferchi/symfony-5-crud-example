@@ -32,14 +32,18 @@ class SecurityController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
+
+
     /**
-     * @Route("/login", name="app_login")
+     * Login
+     *
+     * @Route("/security/login", name="security_login")a
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+         if ( $this->getUser() ) {
+             return $this->redirectToRoute('/');
+         }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -49,8 +53,13 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
+
+
+
     /**
-     * @Route("/logout", name="app_logout")
+     * Logout
+     *
+     * @Route("/security/logout", name="security_logout")
      */
     public function logout()
     {
@@ -61,15 +70,22 @@ class SecurityController extends AbstractController
 
 
     /**
+     * Registration
+     *
      * @Route("/security/register", name="security_register")
      */
     public function register(Request $request, ValidatorInterface $validator, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
+        //dd($this->getUser());
+        /* user is auth */
+        if ($this->getUser()) {
+            return $this->redirectToRoute('target_path');
+        }
         /* show form */
         if ($request->isMethod('GET')) {
             return $this->render('security/register.html.twig');
         }
-        /* if POST check  csrf */
+        /* if POST - check csrf */
         if ( !$this->isCsrfTokenValid('registration', $request->request->get('_csrf_token')) ) {
             $this->addFlash('notice', "Some message");
             return $this->render('security/register.html.twig');
@@ -99,21 +115,20 @@ class SecurityController extends AbstractController
                 $authenticator,
                 'main' // firewall name in security.yaml
             );
-
         } catch (\ErrorException $e) {
             $this->addFlash('warning', $e->getMessage());
             return $this->render('security/register.html.twig');
         }
 
-
-
-        return $this->render('security/register.html.twig');
+        return $this->render('/');
     }
 
 
 
 
     /**
+     * Verify email
+     *
      * @Route("/verify/email", name="app_verify_email")
      */
     public function verifyUserEmail( Request $request ): Response

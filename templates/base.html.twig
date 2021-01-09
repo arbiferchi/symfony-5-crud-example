@@ -20,26 +20,40 @@
 
 
 <body>
-{# TEST #}
-{{ dump(app.user) }}
 
 
 <!-- header -->
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal">SyCRUD</h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Sign in</a>
-    </nav>
-{#    <button type="button" class="btn m-1 btn-outline-primary">Sign up</button>#}
-    <a href="{{ url('security_register') }}" class="btn m-1 btn-outline-primary" role="button" aria-disabled="true">Sign up</a>
+
+    <!-- login / log out
+    ---------------------->
+    {% if app.user %}
+
+        <div class="p-2 text-dark">
+            Hello, {{ app.user.username }}
+        </div>
+        <!-- log out -->
+        <a href="{{ url('security_logout') }}" class="p-2 text-secondary">Loguot</a>
+    {% else %}
+        <!-- login -->
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a href="{{ url('security_login') }}" class="p-2 text-dark" href="#">Sign in</a>
+        </nav>
+        <!-- registration -->
+        <a href="{{ url('security_register') }}" class="btn m-1 btn-outline-primary" role="button" aria-disabled="true">Sign up</a>
+    {% endif %}
+
 </div>
 
+<!-- flash messages -->
 {% include 'flash_messsages.html.twig' %}
 
 <!-- body -->
 {% block body %}
     {# ... #}
 {% endblock %}
+
 
 <!-- footer -->
 <div class="container">

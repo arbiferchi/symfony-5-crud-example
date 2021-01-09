@@ -38,6 +38,11 @@ class Author
      */
     private $gender;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Book::class, inversedBy="oneToMany")
+     */
+    private $book;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +80,18 @@ class Author
     public function setGender(?string $gender): self
     {
         $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getBook(): ?Book
+    {
+        return $this->book;
+    }
+
+    public function setBook(?Book $book): self
+    {
+        $this->book = $book;
 
         return $this;
     }
