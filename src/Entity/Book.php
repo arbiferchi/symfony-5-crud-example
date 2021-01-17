@@ -3,9 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as Validator;
+
 
 /**
  * @ORM\Entity(repositoryClass=BookRepository::class)
@@ -14,35 +15,37 @@ class Book
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $title;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $author;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="smallint")
+     *
+     * @Assert\NotBlank
+     * @Validator\DateFormat("Y")
+     *
      */
     private $pubYear;
 
     /**
-     * @ORM\OneToMany(targetEntity=Author::class, mappedBy="book")
+     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="books")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank
      */
-    private $oneToMany;
+    private $author;
 
-    public function __construct()
-    {
-        $this->oneToMany = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {
@@ -61,57 +64,29 @@ class Book
         return $this;
     }
 
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
 
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    public function getPubYear(): ?\DateTimeInterface
+    public function getPubYear(): ?int
     {
         return $this->pubYear;
     }
 
-    public function setPubYear(\DateTimeInterface $pubYear): self
+    public function setPubYear(int $pubYear): self
     {
         $this->pubYear = $pubYear;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Author[]
-     */
-    public function getOneToMany(): Collection
+    public function getAuthor(): ?Author
     {
-        return $this->oneToMany;
+        return $this->author;
     }
 
-    public function addOneToMany(Author $oneToMany): self
+    public function setAuthor(?Author $author): self
     {
-        if (!$this->oneToMany->contains($oneToMany)) {
-            $this->oneToMany[] = $oneToMany;
-            $oneToMany->setBook($this);
-        }
+        $this->author = $author;
 
         return $this;
     }
 
-    public function removeOneToMany(Author $oneToMany): self
-    {
-        if ($this->oneToMany->removeElement($oneToMany)) {
-            // set the owning side to null (unless already changed)
-            if ($oneToMany->getBook() === $this) {
-                $oneToMany->setBook(null);
-            }
-        }
-
-        return $this;
-    }
 }
