@@ -7,6 +7,8 @@
 
     <div class="container">
         <form method="post" action="{{ path('author-update', {'author':author.id}) }}">
+            {# @csrf #}
+            <input type="hidden" name="token" value="{{ csrf_token('action-update') }}"/>
             <div class="form-group">
                 <label for="InputEmail">Email</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" value="{{ author.email }}">
@@ -21,6 +23,7 @@
             </div>
             <div class="pb-3">
                 <button type="submit" class="btn btn-primary float-right">Save</button>
+                <a href="{{ path('author-show-all') }}" class="btn btn-outline-secondary mr-2 float-right" role="button" aria-pressed="true">back</a>
             </div>
         </form>
     </div>

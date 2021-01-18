@@ -44,6 +44,7 @@
 
                             <!-- form for delete -->
                             <form id="author-delete" action="{{ path('author-delete', {'author':author.id}) }}" method="POST" style="display: none;">
+                                <input type="hidden" name="token" value="{{ csrf_token('action-delete') }}"/>
                             </form>
                         </div>
                     </div>
@@ -55,7 +56,7 @@
             <tr>
                 <th scope="row"></th>
                 <td colspan="4">
-                    <a href="{{ path('author-create') }}" class="btn btn-outline-secondary float-right" role="button" aria-pressed="true">create</a>
+                    <a href="{{ path('author-create') }}" class="btn btn-outline-success float-right" role="button" aria-pressed="true">create</a>
                 </td>
             </tr>
         </tbody>

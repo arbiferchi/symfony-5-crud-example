@@ -41,13 +41,22 @@
             <a href="{{ url('security_login') }}" class="p-2 text-dark" href="#">Sign in</a>
         </nav>
         <!-- registration -->
-        <a href="{{ url('security_register') }}" class="btn m-1 btn-outline-primary" role="button" aria-disabled="true">Sign up</a>
+        <a href="{{ url('security_register') }}" class="p-2 text-primary">Sign up</a>
     {% endif %}
 
 </div>
 
-<!-- flash messages -->
-{% include 'flash_messsages.html.twig' %}
+<div class="container">
+    <!-- flash messages -->
+    {% include 'flash_messsages.html.twig' %}
+
+    <!-- menu -->
+    <div class="btn-group mr-md-auto" role="group">
+        <a href="{{ path('/') }}" class="btn btn-outline-secondary" role="button" aria-pressed="true">Home</a>
+        <a href="{{ path('author-show-all') }}" class="btn btn-outline-secondary" role="button" aria-pressed="true">Authors</a>
+        <a href="{{ path('author-show-all') }}" class="btn btn-outline-secondary" role="button" aria-pressed="true">Books</a>
+    </div>
+</div>
 
 <!-- body -->
 {% block body %}

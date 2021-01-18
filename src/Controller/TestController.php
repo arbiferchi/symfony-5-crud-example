@@ -86,6 +86,12 @@ class TestController extends AbstractController
     public function test_relation(): Response
     {
 
+        $author = $this->getDoctrine()->getRepository(Author::class)->find(3);
+        $books = $author->getBooks();
+        foreach($books as $book) {
+            dump($book->getPubYear());
+        }
+        dd($books);
 
         return new Response('<br>END TEST<br>');
     }

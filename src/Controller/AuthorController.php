@@ -84,6 +84,12 @@ class AuthorController extends AbstractController
                 'author' => $author
             ]);
         }
+        /* check @csrf */
+        $token = $request->request->get('token');
+        if ( !$this->isCsrfTokenValid('author-update', $token) ) {
+            return $this->redirectToRoute('author-show-all');
+        }
+        /* update */
         $author->setName($request->request->get('name'));
         $author->setEmail($request->request->get('email'));
         $author->setGender($request->request->get('gender'));
@@ -107,7 +113,12 @@ class AuthorController extends AbstractController
      */
     public function actionDelete(Author $author, Request $request): Response
     {
-        /* show form */
+        /* check @csrf */
+        $token = $request->request->get('token');
+        if ( !$this->isCsrfTokenValid('action-delete', $token) ) {
+            return $this->redirectToRoute('author-show-all');
+        }
+        /* remove item */
         if ($request->isMethod('POST')) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($author);
