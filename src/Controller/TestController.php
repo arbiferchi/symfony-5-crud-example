@@ -88,10 +88,25 @@ class TestController extends AbstractController
 
         $author = $this->getDoctrine()->getRepository(Author::class)->find(3);
         $books = $author->getBooks();
+        dump($books);
         foreach($books as $book) {
             dump($book->getPubYear());
         }
-        dd($books);
+
+        return new Response('<br>END TEST<br>');
+    }
+
+
+    /**
+     * @Route("/test_count")
+     */
+    public function test_count(): Response
+    {
+
+        $authors = $this->getDoctrine()->getRepository(Author::class)->findAll();
+        dd($authors[0]);
+
+
 
         return new Response('<br>END TEST<br>');
     }

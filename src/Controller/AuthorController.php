@@ -20,11 +20,10 @@ class AuthorController extends AbstractController
      */
     public function actionShowAll(): Response
     {
-        $repository = $this->getDoctrine()->getRepository(Author::class);
+        $authors = $this->getDoctrine()->getRepository(Author::class)
+            ->findBy([], ['name'=>'ASC']);
 
-        return $this->render('author/show-all.html.twig', [
-            'authors' => $repository->findAll(),
-        ]);
+        return $this->render('author/show-all.html.twig', ['authors' => $authors]);
     }
 
 
@@ -51,8 +50,9 @@ class AuthorController extends AbstractController
     {
         /* show form */
         if ($request->isMethod('GET')) {
-            return $this->render('author/create.html.twig');
+            return $this->render('author/create.html.twig', ['genders' => Author::GENDERS]);
         }
+
         $author = new Author();
         $author->setName($request->request->get('name'));
         $author->setEmail($request->request->get('email'));

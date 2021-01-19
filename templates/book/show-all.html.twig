@@ -1,0 +1,64 @@
+{#
+# Collection $books
+#}
+{% extends 'base.html.twig' %}
+{% block title %}Show all Books{% endblock %}
+{% block body %}
+
+<div class="container mb-2 mt-4">
+    <h3>
+        All books
+    </h3>
+    <!-- table -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Author</th>
+            <th scope="col">Title</th>
+            <th scope="col">Pub year</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set cnt = 1 %}
+        {% for book in books %}
+            <tr>
+                <th scope="row">{{ cnt }}</th>
+                <td>{{ book.author.name }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.pubYear }}</td>
+                <td>
+                    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <a href="{{ path('book-show-one', {'book':book.id}) }}" class="btn btn-light" role="button" aria-pressed="true">show</a>
+                            <a href="{{ path('book-update', {'book':book.id}) }}" class="btn btn-secondary" role="button" aria-pressed="true">edit</a>
+                            <a href="{{ path('book-delete', {'book':book.id}) }}" class="btn btn-danger" role="button" aria-pressed="true"
+                               onclick="event.preventDefault();
+                               document.getElementById('book-delete-{{ book.id }}').submit();">delete
+                            </a>
+
+                            <!-- form for delete -->
+                            <form id="book-delete-{{ book.id }}" action="{{ path('book-delete', {'book':book.id}) }}" method="POST" style="display: none;">
+                                <input type="hidden" name="token" value="{{ csrf_token('action-delete') }}"/>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% set cnt = cnt + 1 %}
+        {% endfor %}
+        <!-- create btn -->
+            <tr>
+                <th scope="row"></th>
+                <td colspan="4">
+                    <a href="{{ path('book-create') }}" class="btn btn-outline-success float-right" role="button" aria-pressed="true">create</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{#
+# $author
+#}
+{% extends 'base.html.twig' %}
+{% block title %}Show Book!{% endblock %}
+{% block body %}
+
+    <div class="container mb-2 mt-4">
+        <h3>
+            {{ book.title }}
+        </h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Pub year</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author.name }}</td>
+                    <td>{{ book.pubYear }}</td>
+                    <td>
+                        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a href="{{ path('book-show-all') }}" class="btn btn-outline-secondary" role="button" aria-pressed="true">back</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

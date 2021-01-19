@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Classes\DBAL\LangType;
 use App\Repository\AuthorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,6 +15,9 @@ use App\Entity\Book;
  */
 class Author
 {
+
+    const GENDERS = ['male', 'female'];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -46,20 +50,24 @@ class Author
      */
     private $books;
 
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+
     public function getName(): ?string
     {
         return $this->name;
     }
+
 
     public function setName(string $name): self
     {
@@ -68,10 +76,12 @@ class Author
         return $this;
     }
 
+
     public function getEmail(): ?string
     {
         return $this->email;
     }
+
 
     public function setEmail(string $email): self
     {
@@ -80,10 +90,12 @@ class Author
         return $this;
     }
 
+
     public function getGender(): ?string
     {
         return $this->gender;
     }
+
 
     public function setGender(?string $gender): self
     {
@@ -91,6 +103,7 @@ class Author
 
         return $this;
     }
+
 
     /**
      * @return Collection|Book[]

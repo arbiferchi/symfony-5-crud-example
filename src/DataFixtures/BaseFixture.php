@@ -7,7 +7,6 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFact;
 use Faker\Generator as FakerGen;
 
-
 abstract class BaseFixture extends Fixture
 {
     /** @var ObjectManager */

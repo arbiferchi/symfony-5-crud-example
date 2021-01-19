@@ -1,5 +1,5 @@
 {#
-# $authors
+# Collection $authors
 #}
 {% extends 'base.html.twig' %}
 {% block title %}Show all Authors{% endblock %}
@@ -39,11 +39,11 @@
                             <a href="{{ path('author-update', {'author':author.id}) }}" class="btn btn-secondary" role="button" aria-pressed="true">edit</a>
                             <a href="{{ path('author-delete', {'author':author.id}) }}" class="btn btn-danger" role="button" aria-pressed="true"
                                onclick="event.preventDefault();
-                               document.getElementById('author-delete').submit();">delete
+                               document.getElementById('author-delete-{{ author.id }}').submit();">delete
                             </a>
 
                             <!-- form for delete -->
-                            <form id="author-delete" action="{{ path('author-delete', {'author':author.id}) }}" method="POST" style="display: none;">
+                            <form id="author-delete-{{ author.id }}" action="{{ path('author-delete', {'author':author.id}) }}" method="POST" style="display: none;">
                                 <input type="hidden" name="token" value="{{ csrf_token('action-delete') }}"/>
                             </form>
                         </div>

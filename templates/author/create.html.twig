@@ -1,3 +1,7 @@
+{#
+# array $genders
+#}
+
 {% extends 'base.html.twig' %}
 {% block title %}Create Author{% endblock %}
 {% block body %}
@@ -10,14 +14,17 @@
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Name</label>
-                <input type="text" class="form-control" id="exampleName" name="name" aria-describedby="nameHelp" placeholder="Enter name">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your name.</small>
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" aria-describedby="name" placeholder="Enter name">
+                <small id="nameHelp" class="form-text text-muted">We'll never share your name.</small>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Gender</label>
-                <input type="text" class="form-control" id="exampleGender" name="gender" aria-describedby="genderHelp" placeholder="Enter gender">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your gender.</small>
+                <label for="gender">Select your gender</label>
+                <select class="form-control" id="gender" name="gender">
+                    {% for gender in genders %}
+                        <option>{{ gender }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

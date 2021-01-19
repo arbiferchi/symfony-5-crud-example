@@ -14,10 +14,38 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BookRepository extends ServiceEntityRepository
 {
+    /**
+     * BookRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Book::class);
     }
+
+
+
+    /**
+     * @return Book[] Returns an array of Book objects
+     */
+    public function findAllJoinedAuthors()
+    {
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT b, a 
+                    FROM App\Entity\Book b
+                    INNER JOIN b.author a
+                    ORDER BY b.id ASC'
+            );
+        return $query->getResult();
+    }
+
+
+
+
+
+
+
+
 
     // /**
     //  * @return Book[] Returns an array of Book objects
