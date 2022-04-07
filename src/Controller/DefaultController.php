@@ -21,4 +21,12 @@ class DefaultController extends AbstractController
             'controller_name' => 'DefaultController',
         ]);
     }
+
+    /**
+     * @Route("debug")
+     */
+    public function debug()
+    {
+        dd('foo');
+    }
 }
